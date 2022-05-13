@@ -8,6 +8,8 @@ servers:
 paths:
   /categories:
     get:
+      security:
+        - ApiKeyAuth: []
       tags:
         - "Category API"
       description: List all categories
@@ -30,6 +32,8 @@ paths:
                       $ref:
                         '#/components/schemas/Category'
     post:
+      security:
+        - ApiKeyAuth: []
       tags:
         - "Category API"
       description: Create new category
@@ -59,6 +63,8 @@ paths:
                         '#/components/schemas/Category'
   /categories/{id}:
     get:
+      security:
+        - ApiKeyAuth: []
       tags:
         - "Category API"
       description: Get category by ID
@@ -90,6 +96,8 @@ paths:
                       $ref:
                         '#/components/schemas/Category'
     put:
+      security:
+        - ApiKeyAuth: []
       tags:
         - "Category API"
       description: Update category by ID
@@ -126,6 +134,8 @@ paths:
                       $ref:
                         '#/components/schemas/Category' 
     delete:
+      security:
+        - ApiKeyAuth: []
       tags:
         - "Category API"
       description: Delete category by ID
@@ -152,6 +162,11 @@ paths:
                   status:
                     type: string
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
   schemas:
     CreateOrUpdateCategory:
       type: object
