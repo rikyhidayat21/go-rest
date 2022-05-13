@@ -38,10 +38,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
+              $ref:
+                '#/components/schemas/CreateOrUpdateCategory'
       responses:
         '201':
           description: Success create category
@@ -91,9 +89,50 @@ paths:
                     items: 
                       $ref:
                         '#/components/schemas/Category'
+    put:
+      tags:
+        - "Category API"
+      description: Update category by ID
+      summary: Update category by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+            minimum: 1
+          required: true
+          description: The category ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:
+                '#components/schemas/CreateOrUpdateCategory'
+      responses:
+       '200':
+          description: Success update category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items: 
+                      $ref:
+                        '#/components/schemas/Category' 
 
 components:
   schemas:
+    CreateOrUpdateCategory:
+      type: object
+      properties:
+        name:
+          type: string 
     Category:
       type: object
       properties:
