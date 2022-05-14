@@ -3,8 +3,12 @@ package main
 import (
 	"memetpaten/go-rest/app"
 	"memetpaten/go-rest/controller"
+	"memetpaten/go-rest/helper"
 	"memetpaten/go-rest/repository"
 	"memetpaten/go-rest/service"
+	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/julienschmidt/httprouter"
@@ -32,4 +36,12 @@ func main() {
 	router.GET("/api/v1/categories/:id", categoryController.FindById)
 	router.PUT("/api/v1/categories/:id", categoryController.Update)
 	router.DELETE("/api/v1/categories/:id", categoryController.Delete)
+
+	server := http.Server{
+		Addr: "localhost:4000",
+		Handler: router,
+	}
+
+	err := server.ListenAndServe()
+	helper.PanicIfError(err)
 }
