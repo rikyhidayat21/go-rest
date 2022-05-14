@@ -14,6 +14,12 @@ type CategoryControllerImpl struct {
 	CategoryService service.CategoryService
 }
 
+func NewCategoryController(categoryService service.CategoryService) CategoryController {
+	return &CategoryControllerImpl{
+		CategoryService: categoryService,
+	}
+}
+
 func (controller *CategoryControllerImpl) Create(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	// process decode request body
 	categoryCreateRequest := web.CategoryCreateRequest{}
@@ -90,7 +96,7 @@ func (controller *CategoryControllerImpl) FindById(w http.ResponseWriter, r *htt
 	helper.WriteToResponseBody(w, webResponse)	
 }
 
-func (controller *CategoryControllerImpl) FindAll(w http.ResponseWriter, r *http.Request, params httprouter.Param) {
+func (controller *CategoryControllerImpl) FindAll(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	// because find all no need params, so we just send response
 	// process find all category
 	categoryResponses := controller.CategoryService.FindAll(r.Context())
